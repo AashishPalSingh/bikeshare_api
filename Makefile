@@ -2,9 +2,9 @@ install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
 format:
-	black *.py
+	black app/*.py
 lint:
-	pylint --disable=R,C script.py
+	pylint --disable=R,C app/*.py
 test:
-	python -m pytest tests/test_*.py
+	python -m pytest 
 all: install lint test format
