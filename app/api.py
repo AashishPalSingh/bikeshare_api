@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1]
 sys.path.append(str(root))
@@ -31,6 +32,7 @@ def health() -> dict:
 
     return health.dict()
 
+
 example_input = {
     "inputs": [
         {
@@ -41,29 +43,30 @@ example_input = {
             "weekday": "Mon",
             "workingday": "Yes",
             "weathersit": "Mist",
-            "temp":6.10,
+            "temp": 6.10,
             "atemp": 3.0014,
             "hum": 49.0,
             "windspeed": 19.0012,
-            "casual":4,
-            "registered":135
+            "casual": 4,
+            "registered": 135,
         }
     ]
 }
 
 
 @api_router.post("/predict", response_model=schemas.PredictionResults, status_code=200)
-async def predict(input_data: schemas.MultipleDataInputs = Body(..., example=example_input)) -> Any:
+async def predict(
+    input_data: schemas.MultipleDataInputs = Body(..., example=example_input)
+) -> Any:
     """
     Survival predictions with the bike_sharing_model
     """
 
     input_df = pd.DataFrame(jsonable_encoder(input_data.inputs))
-    
+
     results = make_prediction(input_data=input_df.replace({np.nan: None}))
 
     if results["errors"] is not None:
         raise HTTPException(status_code=400, detail=json.loads(results["errors"]))
 
     return results
-
