@@ -1,4 +1,3 @@
-import sys
 from typing import List
 
 from pydantic import AnyHttpUrl

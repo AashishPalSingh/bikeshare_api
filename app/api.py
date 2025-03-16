@@ -26,11 +26,11 @@ def health() -> dict:
     """
     Root Get
     """
-    health = schemas.Health(
+    healthObj = schemas.Health(
         name=settings.PROJECT_NAME, api_version=__version__, model_version=model_version
     )
 
-    return health.dict()
+    return healthObj.dict()
 
 
 example_input = {

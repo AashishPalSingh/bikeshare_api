@@ -34,7 +34,7 @@ def index(request: Request) -> Any:
         "</body>"
         "</html>"
     )
-
+    print(request)
     return HTMLResponse(content=body)
 
 
